@@ -3,7 +3,7 @@ A function that handles all enabled different low power modes
 
 For Modem sleep the wake up timer does not not re-enable modems, you must reintialize the wifi and bluetooth
 
->Current consumption measurements, with 5v in
+*Current consumption measurements, with 5v in
 Active Mode
 Measured current consumption: 73.16mA (wifi/radio on but not initialised, closer to 100mA if initialized)
 
