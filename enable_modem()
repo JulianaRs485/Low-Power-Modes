@@ -1,0 +1,21 @@
+//For re-enabling the modem
+void enable_modem(){
+  esp_err_t ret = nvs_flash_init();
+  if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    nvs_flash_erase();
+    nvs_flash_init();
+  }
+
+  esp_bt_controller_enable(ESP_BT_MODE_BTDM);
+
+  // Initialize Wi-Fi stack again
+  esp_netif_init();
+  esp_event_loop_create_default();
+  esp_netif_create_default_wifi_sta();
+
+  wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+  esp_wifi_init(&cfg);
+  esp_wifi_set_mode(WIFI_MODE_STA);
+  esp_wifi_start();
+  return;
+}
