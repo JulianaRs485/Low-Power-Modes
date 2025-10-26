@@ -1,0 +1,39 @@
+//sleep mode function 
+//  1 = Modem sleep
+//  2 = Light sleep
+//  3 = Deep sleep
+//  4 = Hibernation (might delete idk)
+//
+void set_power_mode(int mode, int sleepTime){
+  //sets GPIO input, optional, we can choose to remove this code
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 1); 
+  //dont set timer if timer = 0, assume user doesnt want to use timer
+  if(sleepTime >= 1 ){
+    esp_sleep_enable_timer_wakeup(sleepTime * uS_To_S);
+  }
+
+  switch(mode){
+    case 1:
+      //doesnt wake up with esp_sleep_timer
+      //see enable_modem function to restart
+      esp_wifi_stop();
+      esp_bt_controller_disable();
+      break;
+    case 2:
+      esp_wifi_stop();
+      esp_bt_controller_disable();
+      esp_light_sleep_start();
+      break;
+    case 3:
+      //reboots after wake up
+      esp_deep_sleep_start();
+      break;
+    case 4:
+      //full reboot after wake up, use with caution 
+      esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_OFF);
+      esp_deep_sleep_start();
+      break;
+    default:
+      break;
+  }
+}
