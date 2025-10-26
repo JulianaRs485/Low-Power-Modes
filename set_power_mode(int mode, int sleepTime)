@@ -2,7 +2,6 @@
 //  1 = Modem sleep
 //  2 = Light sleep
 //  3 = Deep sleep
-//  4 = Hibernation (might delete idk)
 //
 void set_power_mode(int mode, int sleepTime){
   //sets GPIO input, optional, we can choose to remove this code
@@ -26,11 +25,6 @@ void set_power_mode(int mode, int sleepTime){
       break;
     case 3:
       //reboots after wake up
-      esp_deep_sleep_start();
-      break;
-    case 4:
-      //full reboot after wake up, use with caution 
-      esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_OFF);
       esp_deep_sleep_start();
       break;
     default:
